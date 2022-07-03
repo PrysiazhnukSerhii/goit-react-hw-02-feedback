@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import { render } from '@testing-library/react';
 import { Notification } from './Notification';
 
 export class PaintFeedbackStatistics extends Component {
