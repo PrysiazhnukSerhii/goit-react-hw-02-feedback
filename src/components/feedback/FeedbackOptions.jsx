@@ -1,5 +1,3 @@
-import { Component } from 'react';
-
 export function CreateFeedbackForm(props) {
   return (
     <section title="FeedbackForm">
