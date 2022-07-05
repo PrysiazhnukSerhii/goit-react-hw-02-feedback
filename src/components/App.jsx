@@ -1,6 +1,7 @@
 import { Component } from 'react';
-import { CreateFeedbackForm } from './feedback/FeedbackOptions';
+import { CreateFeedbackForm } from './feedback/feedbackOptions/FeedbackOptions';
 import { PaintFeedbackStatistics } from './feedback/feedbackStatistics';
+import { Section } from './feedback/section';
 
 export class App extends Component {
   state = {
@@ -46,12 +47,16 @@ export class App extends Component {
   render() {
     return (
       <div>
-        <CreateFeedbackForm
-          total={this.onLeaveFeedback}
-          count={this.countTotalFeedback}
-          positivCount={this.countPositiveFeedbackPercentage}
-        />
-        <PaintFeedbackStatistics options={this.state} />
+        <Section title="Please leave feedback">
+          <CreateFeedbackForm
+            total={this.onLeaveFeedback}
+            count={this.countTotalFeedback}
+            positivCount={this.countPositiveFeedbackPercentage}
+          />
+        </Section>
+        <Section title="Statistics">
+          <PaintFeedbackStatistics options={this.state} />
+        </Section>
       </div>
     );
   }
