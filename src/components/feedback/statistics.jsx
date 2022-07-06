@@ -14,5 +14,3 @@ export class Statistics extends Component {
     );
   }
 }
-
-
