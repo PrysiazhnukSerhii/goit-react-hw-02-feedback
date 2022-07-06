@@ -1,24 +1,24 @@
 import { Button } from './FeedbackOptions.styled';
 
-const nameButton = ['Good', 'Neutral', 'Bad'];
-
-export function CreateFeedbackForm(props) {
+export function FeedbackOptions(props) {
   return (
     <>
-      {nameButton.map(name => (
-        <Button
-          type="button"
-          key={name}
-          name={name}
-          onClick={() => {
-            props.total(name);
-            props.count();
-            props.positivCount();
-          }}
-        >
-          {name}
-        </Button>
-      ))}
+      {props.options.map(name => {
+        let upperCaseFirstLeterName =
+          name.charAt(0).toUpperCase() + name.substring(1);
+        return (
+          <Button
+            type="button"
+            key={name}
+            name={name}
+            onClick={() => {
+              props.onLeaveFeedback(name);
+            }}
+          >
+            {upperCaseFirstLeterName}
+          </Button>
+        );
+      })}
     </>
   );
 }

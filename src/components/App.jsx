@@ -1,15 +1,14 @@
 import { Component } from 'react';
-import { CreateFeedbackForm } from './feedback/feedbackOptions/FeedbackOptions';
-import { PaintFeedbackStatistics } from './feedback/feedbackStatistics';
 import { Section } from './feedback/section';
+import { Statistics } from './feedback/statistics';
+import { FeedbackOptions } from './feedback/feedbackOptions/FeedbackOptions';
+import { Notification } from './feedback/notification';
 
 export class App extends Component {
   state = {
-    Good: 0,
-    Neutral: 0,
-    Bad: 0,
-    Total: 0,
-    PositiveFeedback: 0,
+    good: 0,
+    neutral: 0,
+    bad: 0,
   };
 
   onLeaveFeedback = name => {
@@ -18,44 +17,50 @@ export class App extends Component {
     });
   };
 
-  countTotalFeedback = () => {
-    this.setState(prevState => {
-      let total = null;
-
-      for (let state in prevState) {
-        if (state === 'Total') {
-          break;
-        }
-
-        total = total + prevState[state];
-      }
-
-      return { Total: total };
-    });
+  total = () => {
+    let total = null;
+    for (let prop in this.state) {
+      total = total + this.state[prop];
+    }
+    return total;
   };
 
-  countPositiveFeedbackPercentage = () => {
-    this.setState(prevState => {
-      let totalPositiveFeedback = null;
+  percentagePositive = () => {
+    let total = null;
+    for (let prop in this.state) {
+      total = total + this.state[prop];
+    }
 
-      totalPositiveFeedback = (prevState.Good / prevState.Total) * 100;
+    if (total === 0) {
+      return 0;
+    }
 
-      return { PositiveFeedback: Math.floor(totalPositiveFeedback) };
-    });
+    return Math.floor((this.state.good / total) * 100);
   };
 
   render() {
+    const { good, neutral, bad } = this.state;
     return (
       <div>
         <Section title="Please leave feedback">
-          <CreateFeedbackForm
-            total={this.onLeaveFeedback}
-            count={this.countTotalFeedback}
-            positivCount={this.countPositiveFeedbackPercentage}
+          <FeedbackOptions
+            options={Object.keys(this.state)}
+            onLeaveFeedback={this.onLeaveFeedback}
           />
         </Section>
+
         <Section title="Statistics">
-          <PaintFeedbackStatistics options={this.state} />
+          {this.total() ? (
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={this.total()}
+              positivePercentage={this.percentagePositive()}
+            />
+          ) : (
+            <Notification message="There is no feedback"></Notification>
+          )}
         </Section>
       </div>
     );
