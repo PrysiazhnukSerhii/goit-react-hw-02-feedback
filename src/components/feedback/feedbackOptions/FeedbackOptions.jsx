@@ -1,9 +1,11 @@
 import { Button } from './FeedbackOptions.styled';
 
 export function FeedbackOptions(props) {
+  const { options, onLeaveFeedback } = props;
+
   return (
     <>
-      {props.options.map(name => {
+      {options.map(name => {
         let upperCaseFirstLeterName =
           name.charAt(0).toUpperCase() + name.substring(1);
         return (
@@ -12,7 +14,7 @@ export function FeedbackOptions(props) {
             key={name}
             name={name}
             onClick={() => {
-              props.onLeaveFeedback(name);
+              onLeaveFeedback(name);
             }}
           >
             {upperCaseFirstLeterName}
